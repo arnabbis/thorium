@@ -1,49 +1,51 @@
 const express = require('express');
 const router = express.Router();
-let players = [];
+let persons = [
+    {
+        name: "PK",
+        age: 10,
+        votingStatus: false
+    },
+    {
+        name: "SK",
+        age: 20,
+        votingStatus: false
+    },
+    {
+        name: "AA",
+        age: 70,
+        votingStatus: false
+    },
+    {
+        name: "SC",
+        age: 5,
+        votingStatus: false
+    },
+    {
+        name: "HO",
+        age: 40,
+        votingStatus: false
+    }
+]
 
-router.post('/players', function(req, res) {
+router.post("/election", function (req, res) {
+    let votingAge = req.query.votingAge
 
-    let player = req.body;
-    let playerName = player.name
-    for(let i = 0; i < players.length; i++){
-        if(players[i].name == playerName){
-            res.send('player already exist')
+    let arnab=[];
+    for (let i = 0; i < persons.length; i++) {
+
+        if (persons[i].age > votingAge) {
+        
+            persons[i].votingStatus = true
+            arnab.push(persons[i])
         }
     }
-    players.push(player);
-    console.log('here is the playter array',players);
-    res.send(players);
-});
-
-router.post('/players/:playerName/bookings/:bookingId', function(req, res){
-    let name = req.params.playerName
-    let isPlayerPresent = false
-
-    for(let i = 0; i < players.length; i++) {
-        if(players[i].name == name) {
-        isPlayerPresent = true
-        }
-    }
-
-    if(! isPlayerPresent){
-        return res.send('player not present')
-    }
-
-    let booking = req.body
-    let bookindId = req.params.bookingId
-    for(let i = 0; i < players.length; i++){
-        if(players[i].name == name) {
-            let isBookingPresent = false
-            for(let j = 0; j < players[i].bookings.length; j++){
-                if(players[i].bookings[j])
-            
-            players[i].bookings.push(booking)
-        }
-    }
+if (arnab.length>0)
+{
+    return res.send(arnab)
 }
-
-    res.send(players)
-
-});
+else{
+    return res.send("no member found above this age")
+}
+ });
 module.exports = router;
