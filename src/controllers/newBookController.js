@@ -1,6 +1,7 @@
 const { count } = require("console")
 const authorModel = require("../models/authorModel")
 const bookModel= require("../models/bookModel")
+const newPublisher = require("../models/newPublisher")
 const publisherModel = require("../models/newPublisher")
 
 const createBook= async function (req, res) {
@@ -33,6 +34,24 @@ const getBooks= async function (req, res) {
     res.send({data: bookname})
 }
 
+const newBook= async function (req,res) {
+    console.log("books",req.body);
+
+        await bookModel.find({ratings:{$gte:3.5}}).updateMany({$inc:{price:10}})
+    
+        res.send("Price successfully Updated")
+    }
+
+
+const rating= async function (req,res) {
+    console.log("books1",req.body);
+    const update = await bookModel.updateMany({$or: [{"publisher":"6220f2c87b7853795dcec07a" },{"publisher": "6220f2fb7b7853795dcec080"}]},{"isHardCover" : true});
+    res.send({msg:"The isHardCover value is updated with these two id's"})
+  }
+
+
 
 module.exports.createBook= createBook
 module.exports.getBooks= getBooks
+module.exports.newBook=newBook
+module.exports.rating=rating
