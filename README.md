@@ -127,3 +127,7 @@ Refer below sample
 #### Refer https://jsonplaceholder.typicode.com/guide/ for some fake blogs data.
 
 #### Note: Create a group database and use the same database in connection string by replacing `groupXDatabase
+
+
+### SOLUTIONS USED IN OUR PROJECT : 
+(1) PACAKAGE LIBRARY USED IN OUR PROJECT IS : NPM I EMAIL-VALIDATOR (FOR VALIDATING OUR EMAIL IN THE SCHEMA).
