@@ -133,3 +133,7 @@ Refer below sample
 (1) PACAKAGE LIBRARY USED IN OUR PROJECT IS : NPM I VALIDATOR (FOR VALIDATING OUR EMAIL IN THE SCHEMA).
 
 (2) ### Author APIs /authors = first done
+
+(3)  ### GET /blogs  = done partially only 400 left
+
+(4)

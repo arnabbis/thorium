@@ -1,13 +1,16 @@
 // (2) ### POST /blogs
 
 const blogsModel = require("../models/blogsModel");
-// const authorModel = require("../models/authorModel");
+const { author } = require("./authorController");
 
 
 const blogs = async function(req,res){
     try{
         let data =req.body;
-        let authorId = data.authorid
+        let authorId = data.author
+        if(!authorId){
+            res.status(400).send("Ivalid");
+        }
         console.log("blogs",data,authorId);
         if (Object.keys(data).length != 0) {
             let savedData = await blogsModel.create(data)
@@ -21,5 +24,14 @@ const blogs = async function(req,res){
 }
 }
 
+// (3)  ### GET /blogs
+
+const getBlog = async function(req,res){
+  let findBlog = await blogsModel.find()
+  res.status(200).send({status:true , msg:findBlog});
+}
+
+
  module.exports.blogs = blogs;
+ module.exports.getBlog = getBlog;
  

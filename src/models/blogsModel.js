@@ -11,30 +11,24 @@ const blogsSchema = new mongoose.Schema({
     },
     authorid: {
         type: ObjectId,
-        ref: author
+        ref: "author"
     },
     tags:[String],
-    category: {
-        type: String,
-        required:true,
-        enum: [
-            { technology:[String]},
-            { entertainment:[String]},
-            { life_style:[String]},
-            { food:[String]},
-            { fashion:[String]}]
-        },
+    category:{
+        type : String,
+        require : true
+    },
+
+    subcategory : ["String"], 
     isDeleted:{type:Boolean,
     default:false
     },
-    deletedAt:{
-        type: Date,
-         required: true,
-          default: Date.now
-    },
+    // deletedAt:{
+    //     type: Date,
+    //       default: Date.now
+    // },
     publishedAt:{
         type: Date,
-         required: true,
           default: Date.now
     },
     isPublished:{
