@@ -1,7 +1,6 @@
 const { Router } = require('express');
 const express = require('express');
 const router = express.Router();
-const authorModel = require("../models/authorModel")
 const authorController = require("../controllers/authorController")
 const blogsController = require("../controllers/blogsController")
 
@@ -15,6 +14,11 @@ router.post("/createBlogs",blogsController.blogs)
 // ### GET /blogs
 router.get("/getBlogs",blogsController.getBlog)
 
+router.put("/blogs/:blogId", blogsController.updateBlog)
+
+router.delete("/blogs/:blogId", blogsController.deleteBlog)
+
+router.delete("blogs" , blogsController.deleteByQueryParam)
 
 
 
