@@ -1,4 +1,3 @@
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const route = require("./routes/route");
@@ -14,7 +13,7 @@ mongoose.connect("mongodb+srv://functionup-cohort:G0Loxqc9wFEGyEeJ@cluster0.rzot
     useNewUrlParser:true
 })
 
-.then( () =>console.log(" MONGO DB IS CONNECTED "))
+.then( () =>console.log("Mongo DB is Connected"))
 .catch( err => console.log(err))
 
 

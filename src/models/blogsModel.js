@@ -9,9 +9,10 @@ const blogsSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    authorid: {
-        type: ObjectId,
-        ref: "author"
+    authorId: {
+        required:true,
+        type:ObjectId,
+        ref:"author"
     },
     tags:[String],
     category:{

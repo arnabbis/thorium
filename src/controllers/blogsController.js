@@ -7,11 +7,12 @@ const { author } = require("./authorController");
 const blogs = async function (req, res) {
   try {
     let data = req.body;
-    let authorId = data.author
-    if (!authorId) {
+    let authorId = data.authorId
+    const author_details = await authorModel.findById(authorId)
+    if (!author_details) {
       res.status(400).send("Ivalid");
     }
-    console.log("blogs", data, authorId);
+    req.body.isPublished = true;
     if (Object.keys(data).length != 0) {
       let savedData = await blogsModel.create(data)
       res.status(201).send({ msg: savedData });
@@ -67,16 +68,16 @@ const updateBlog = async function (req, res) {
 
 const deleteBlog = async function (req, res) {
   try {
-    let blogId = req.params.blogsId
-    if (Object.keys(blogId).length == 0) {
+    let blogId = req.params.blogId
+    if (!blogId) {
       res.status(400).send({ status: false, msg: "blogId is required, BAD REQUEST" })
     }
-    let blogDetails = await blogsModel.find({ _id: blogId }, { isDeleted: false })
+    let blogDetails = await blogsModel.findOne({ _id: blogId }, { isDeleted: false })
     if (!blogDetails) {
       res.status(404).send({ status: false, msg: "blog not exist" })
     } else {
       let blogDetails = await blogsModel.updateOne({ _id: blogId }, { $set: { isDeleted: true } }, { new: true })
-      res.status(201).send()
+      res.status(201).send({msg:"delected blog"})
       console.log(blogDetails)
     }
   }
@@ -90,22 +91,23 @@ const deleteBlog = async function (req, res) {
 
 const deleteByQueryParam = async function (req, res) {
   try {
-    let authorId = req.query.authorId
-    let category = req.query.category
-    if (Object.keys(authorId).length == 0) {
-      res.status(400).send({ status: false, msg: "authorId is required, BAD REQUEST" })
+    let authorIds = req.query.authorId
+    let categorys = req.query.category
+    let tag = req.query.tags
+    let subcategorys = req.query.subcategory
+    if (!authorIds && !categorys && !tag && !subcategorys) {
+      res.status(400).send({ status: false, msg: "quarys is required, BAD REQUEST" })
     }
-    if (Object.keys(category).length == 0) {
-      res.status(400).send({ status: false, msg: "category is required, BAD REQUEST" })
-    }
-    let authorDetails = await authorModel.findById({ _id: authorId })
+    let authorDetails = await authorModel.findById({ _id: authorIds })
     if (!authorDetails) {
       res.status(404).send({ status: false, msg: "authorId not exist" })
     } else {
-      let updatedDetails = await blogsModel.updateOne({ authorId: authorId, category: category }, { $set: { isDeleted: true } })
-      res.status(201).send()
+      let updatedDetails = await blogsModel.findOneAndUpdate({$or: [ { authodId: authorIds },{ category: categorys }, { tags: { $in: [tag] } }, { subcategory: { $in: [subcategorys]}}]},{ isDeleted: true})
+      res.status(201).send({mag:"blog deleted "})
+      req.body.isDeletedAt = new Date()
       console.log(updatedDetails)
     }
+
   }
   catch (error) {
     console.log(error)
