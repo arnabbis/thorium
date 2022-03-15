@@ -24,10 +24,10 @@ const blogsSchema = new mongoose.Schema({
     isDeleted:{type:Boolean,
     default:false
     },
-    // deletedAt:{
-    //     type: Date,
-    //       default: Date.now
-    // },
+    deletedAt:{
+        type: Date,
+          default: Date.now
+    },
     publishedAt:{
         type: Date,
           default: Date.now

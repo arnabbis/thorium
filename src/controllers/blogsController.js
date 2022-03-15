@@ -10,7 +10,7 @@ const blogs = async function (req, res) {
     let authorId = data.authorId
     const author_details = await authorModel.findById(authorId)
     if (!author_details) {
-      res.status(400).send("Ivalid");
+      res.status(400).send("Invalid");
     }
     req.body.isPublished = true;
     if (Object.keys(data).length != 0) {
@@ -104,7 +104,7 @@ const deleteByQueryParam = async function (req, res) {
     } else {
       let updatedDetails = await blogsModel.findOneAndUpdate({$or: [ { authodId: authorIds },{ category: categorys }, { tags: { $in: [tag] } }, { subcategory: { $in: [subcategorys]}}]},{ isDeleted: true})
       res.status(201).send({mag:"blog deleted "})
-      req.body.isDeletedAt = new Date()
+      req.body.deletedAt = new Date()
       console.log(updatedDetails)
     }
 
