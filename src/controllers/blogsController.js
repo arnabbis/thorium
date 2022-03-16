@@ -3,6 +3,7 @@ const authorModel = require("../models/authorModel");
 
 const { author } = require("./authorController");
 
+// (2) ### POST /blogs
 
 const blogs = async function (req, res) {
   try {
@@ -35,7 +36,7 @@ const getBlog = async function (req, res) {
     const tags = req.query.tags
     const subtag = req.query.subcategory
     let findBlog = await blogsModel.find(
-      { isdeleted: false, isPublished: true, $or: [{ category: c_details }, { authodId: a_id }, { tag: { $in: [tags] } }, { subCategory: { $in: [subtag] } }] }
+      {isDeleted:false, isPublished:true, $or:[{authorId:a_id},{category:c_details},{tags:tags},{subcategory:subtag}]}
 
     )
     if (!findBlog) res.status(404).send({ status: false, msg: "not found" })
@@ -83,7 +84,7 @@ const deleteBlog = async function (req, res) {
   }
   catch (error) {
     console.log(error)
-    res.send({ msg: error.message })
+    res.status(500).send({ msg: error.message })
   }
 }
 
@@ -103,7 +104,7 @@ const deleteByQueryParam = async function (req, res) {
       res.status(404).send({ status: false, msg: "authorId not exist" })
     } else {
       let updatedDetails = await blogsModel.findOneAndUpdate({$or: [ { authodId: authorIds },{ category: categorys }, { tags: { $in: [tag] } }, { subcategory: { $in: [subcategorys]}}]},{ isDeleted: true})
-      res.status(201).send({mag:"blog deleted "})
+      res.status(201).send({msg:"blog deleted "})
       req.body.deletedAt = new Date()
       console.log(updatedDetails)
     }
@@ -111,7 +112,7 @@ const deleteByQueryParam = async function (req, res) {
   }
   catch (error) {
     console.log(error)
-    res.send({ msg: error.message })
+    res.status(500).send({ msg: error.message })
   }
 }
 

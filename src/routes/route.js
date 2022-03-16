@@ -9,21 +9,25 @@ const middleWere = require('../middleWare/auth')
 // AUTHOR APIS
 router.post("/createAuthor",authorController.author)  // create author
 
-// ### POST /blogs
+// ### POST /blogs:
 router.post("/createBlogs",middleWere.authenticate,blogsController.blogs) // create blog
 
-// ### GET /blogs
+// ### GET /blogs:
 router.get("/getBlogs",middleWere.authenticate,blogsController.getBlog)  // find blog by quary in authorid,catagory,subcatagory and tags
 
+// ### PUT /blogs/:blogId:
 router.put("/blogs/:blogId",middleWere.authenticate,middleWere.authorise, blogsController.updateBlog) // update blog by params by giving element in body
 
+// ### DELETE /blogs/:blogId:
 router.delete("/blogs/:blogId",middleWere.authenticate,middleWere.authorise ,blogsController.deleteBlog) // delete blog by using blogid in params 
 
-router.delete("/blogs",middleWere.authenticate, middleWere.nuas, blogsController.deleteByQueryParam) // delete blog by using quary
+// ### DELETE /blogs?queryParams:
+router.delete("/blogs",middleWere.authenticate,middleWere.verifyAuthorId,blogsController.deleteByQueryParam) // delete blog by using quary
 
-// phase 2
+// PHASE (2):
 
-router.post("/login" , authorController.loginAuthor) // using psot api to login
+// ### POST(/LOGIN):
+router.post("/login" , authorController.loginAuthor) // using post api to login
 
 
 

@@ -13,7 +13,7 @@ mongoose.connect("mongodb+srv://functionup-cohort:G0Loxqc9wFEGyEeJ@cluster0.rzot
     useNewUrlParser:true
 })
 
-.then( () =>console.log("Mongo DB is Connected"))
+.then( () =>console.log(" MONGO DB IS CONNECTED "))
 .catch( err => console.log(err))
 
 
