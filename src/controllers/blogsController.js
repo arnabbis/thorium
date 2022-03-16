@@ -53,15 +53,15 @@ const updateBlog = async function (req, res) {
     let id = req.params.blogId;
     let data = req.body;
     const updateData = await blogsModel.findById(id)
-    if (updateData.isDeleted) {
-      res.status(404).send({ status: false, msg: "Error in the code" })
+    if (updateData.isDeleted==true) {
+      res.status(404).send({ status: false, msg:err.message})
     }
     data.publishedAt = new Date();
     data.isPublished = true
     const dataMore = await blogsModel.findByIdAndUpdate(id, data, { new: true });
     res.status(201).send({ status: true, msg: dataMore })
   } catch (err) {
-    res.status(500).send({ status: false, Error: err });
+    res.status(500).send({ status: false, Error:err });
   }
 }
 

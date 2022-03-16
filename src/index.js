@@ -9,11 +9,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 
-mongoose.connect("mongodb+srv://functionup-cohort:G0Loxqc9wFEGyEeJ@cluster0.rzotr.mongodb.net/chandresh98-DB?retryWrites=true&w=majority" , {
+mongoose.connect("mongodb+srv://arnabbiswas_14:arnabbiswas@cluster0.b95gv.mongodb.net/group-11-Database?retryWrites=true&w=majority" , {
     useNewUrlParser:true
 })
 
-.then( () =>console.log(" MONGO DB IS CONNECTED "))
+.then( () =>console.log(" MONGO DB IS CONNECTED"))
 .catch( err => console.log(err))
 
 
