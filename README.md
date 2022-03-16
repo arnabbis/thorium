@@ -175,6 +175,7 @@ ALL TESTING DONE TILL NOW AND UPDATED REASULT ARE PRESENT IN  POSTMAN AND MONGOD
 (4) MDN - https://developer.mozilla.org/en-US/docs/Web/JavaScript
 (5) NOTES FROM FUNCTIONUP
 (6) GITHUB LINK USED -https://github.com/arnabbis/thorium.git
+(7) DATABASE CONNECTED -mongodb+srv://arnabbiswas_14:arnabbiswas@cluster0.b95gv.mongodb.net/group-11-Database?retryWrites=true&w=majority
 
 # PROJECT STARTED FROM : 14/03/2022
 # PROJECT ENDED AT : 16/03/2022
