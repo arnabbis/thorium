@@ -27,6 +27,7 @@ const blogs = async function (req, res) {
 }
 
 // (3)  ### GET /blogs
+
 const getBlog = async function (req, res) {
   try {
     const a_id = req.query.authorId
@@ -35,12 +36,13 @@ const getBlog = async function (req, res) {
     const c_details = req.query.category
     const tags = req.query.tags
     const subtag = req.query.subcategory
+    let blogCount = await blogsModel.find({isDeleted:false, isPublished:true}).count()
     let findBlog = await blogsModel.find(
       {isDeleted:false, isPublished:true, $or:[{authorId:a_id},{category:c_details},{tags:tags},{subcategory:subtag}]}
 
     )
     if (!findBlog) res.status(404).send({ status: false, msg: "not found" })
-    res.status(200).send({ status: true, msg: findBlog });
+    res.status(200).send({ status: true,count_blog:blogCount, msg: findBlog });
   } catch (err) {
     res.status(500).send({ status: false, Error: err });
   }
@@ -57,7 +59,7 @@ const updateBlog = async function (req, res) {
       res.status(404).send({ status: false, msg:err.message})
     }
     data.publishedAt = new Date();
-    data.isPublished = true
+    data.isPublished = true;
     const dataMore = await blogsModel.findByIdAndUpdate(id, data, { new: true });
     res.status(201).send({ status: true, msg: dataMore })
   } catch (err) {
@@ -77,7 +79,7 @@ const deleteBlog = async function (req, res) {
     if (!blogDetails) {
       res.status(404).send({ status: false, msg: "blog not exist" })
     } else {
-      let blogDetails = await blogsModel.updateOne({ _id: blogId }, { $set: { isDeleted: true } }, { new: true })
+      let blogDetails = await blogsModel.updateOne({ _id: blogId }, { $set: { isDeleted: true ,deletedAt:Date(),isPublished:false }})
       res.status(201).send({msg:"delected blog"})
       console.log(blogDetails)
     }
@@ -101,11 +103,10 @@ const deleteByQueryParam = async function (req, res) {
     }
     let authorDetails = await authorModel.findById({ _id: authorIds })
     if (!authorDetails) {
-      res.status(404).send({ status: false, msg: "authorId not exist" })
+       res.status(404).send({ status: false, msg: "authorId not exist" })
     } else {
-      let updatedDetails = await blogsModel.findOneAndUpdate({$or: [ { authodId: authorIds },{ category: categorys }, { tags: { $in: [tag] } }, { subcategory: { $in: [subcategorys]}}]},{ isDeleted: true})
+      let updatedDetails = await blogsModel.findOneAndUpdate({$or: [ { authodId: authorIds },{ category: categorys }, { tags: { $in: [tag] } }, { subcategory: { $in: [subcategorys]}}]},{ isDeleted: true,deletedAt:Date() })
       res.status(201).send({msg:"blog deleted "})
-      req.body.deletedAt = new Date()
       console.log(updatedDetails)
     }
 

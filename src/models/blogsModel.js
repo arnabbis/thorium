@@ -17,7 +17,7 @@ const blogsSchema = new mongoose.Schema({
     tags:[String],
     category:{
         type : String,
-        require : true
+        required : true
     },
 
     subcategory : ["String"], 
@@ -26,7 +26,7 @@ const blogsSchema = new mongoose.Schema({
     },
     deletedAt:{
         type: Date,
-          default: Date.now
+          default: undefined
     },
     publishedAt:{
         type: Date,
